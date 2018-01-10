@@ -11,7 +11,7 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
     <!-- 自动扫描  @Controller-->
-    <context:component-scan base-package="com.xiaoyu.web.controller"/>
+    <context:component-scan base-package="com.heitian.ssm.controller"/>
 
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"
@@ -22,6 +22,7 @@
             </list>
         </property>
     </bean>
+
     <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
@@ -31,10 +32,9 @@
         </property>
     </bean>
 
-
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/page/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
@@ -47,4 +47,11 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="4096"/>
     </bean>
+
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.heitian.ssm.annotation.RequestAttributeArgumentResolver"></bean>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+    <bean class="com.heitian.ssm.modelview.SignResultModelView" id="signView" />
 </beans>
